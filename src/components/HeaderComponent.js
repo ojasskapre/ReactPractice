@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.toggleNav = this.toggleNav.bind(this);
+        this.toggleNav = this.toggleNav.bind(this);        
         this.state = {
             isNavOpen: false
         };
@@ -13,7 +13,7 @@ class Header extends Component {
 
     toggleNav() {
         this.setState({
-            isNavOpen: !this.isNavOpen
+            isNavOpen: !this.state.isNavOpen
         });
     }
 

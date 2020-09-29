@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardTitle, CardText } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Card, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 function formatDate(date) {
     const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -7,10 +8,10 @@ function formatDate(date) {
     return shortMonths[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
 }
 
-function renderComments(dish) {
-    if (dish!=null && dish.comments != null) {
+function renderComments(comments) {
+    if (comments!=null) {
         
-        const comm = dish.comments.map((c) => {
+        const comm = comments.map((c) => {
             return (
                 <div>
                     <li className="mt-2">{c.comment}</li>
@@ -41,12 +42,22 @@ const Dishdetail = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-5 col-sm-12 col-xs-12 mt-1">
+        <Breadcrumb>
+          <BreadcrumbItem><Link to="/menu"> Menu </Link></BreadcrumbItem>
+          <BreadcrumbItem>{props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>{props.dish.name}</h3>
+          <hr />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-5 col-sm-12 col-xs-12 m-1">
           {renderDetails(props.dish)}    
         </div>
-        <div className="col-md-5 col-sm-12 col-xs-12 mt-1">
+        <div className="col-md-5 col-sm-12 col-xs-12 m-1">
           <h4>Comments</h4>
-          {renderComments(props.dish)}
+          {renderComments(props.comments)}
         </div>
       </div>
     </div>
