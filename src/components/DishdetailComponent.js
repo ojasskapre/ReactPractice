@@ -4,6 +4,7 @@ import { Control, Errors, LocalForm } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Card, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbItem, 
   Button, Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
+import { baseURL } from '../shared/baseURL';
 
 function formatDate(date) {
     const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -36,7 +37,7 @@ function RenderDetails({dish}) {
   if (dish != null)  
     return (
       <Card>
-        <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
+        <CardImg width="100%" src={baseURL + dish.image} alt={dish.name}></CardImg>
         <CardTitle className="font-weight-bold mt-2 ml-2">{dish.name}</CardTitle>
         <CardText className="ml-2">{dish.description}</CardText>
       </Card>
