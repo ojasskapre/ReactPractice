@@ -1,28 +1,45 @@
 import React from 'react';
+import {  Loading } from './LoadingComponent';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseURL } from '../shared/baseURL';
+import { Fade, Stagger } from 'react-animation-components';
 
 function About(props) {
+    // Assignment-3 (Task 1) - using leaders data from server and handling loading and error conditions
+    function RenderLeader({leaders, isLoading, errMess}) {
+        if (isLoading)
+            return (<Loading />);
+        else if (errMess)
+            return (<h4>{errMess}</h4>);
+        else {
+            const leadersList = leaders.map((leader) => {
+                return (
+                    // Assignment-3 (Task 3) - adding animation to leaders list
+                    <Fade in> 
+                        <Media tag="li">
+                            <Media left>
+                                <Media object className="m-1 mr-4" style={{"width": "100px"}} src={ baseURL + leader.image} alt={leader.name} />
+                            </Media>
+                            <Media body>
+                                <Media heading>{leader.name}</Media>
+                                <p>{leader.designation}</p>
+                                <p>{leader.description}</p>
+                            </Media>
+                        </Media>
+                    </Fade>
+                );
+            });
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <RenderLeader leader={leader} />
-        );
-    });
-
-    function RenderLeader({leader}) {
-        return (
-            <Media tag="li">
-                <Media left>
-                    <Media object className="m-1 mr-4" style={{"width": "100px"}} src={leader.image} alt={leader.name} />
-                </Media>
-                <Media body>
-                    <Media heading>{leader.name}</Media>
-                    <p>{leader.designation}</p>
-                    <p>{leader.description}</p>
-                </Media>
-            </Media>
-        );
+            // Assignment-3 (Task 3) - adding animation to leaders list
+            return ( 
+                <Media list>
+                    <Stagger in>
+                        { leadersList }
+                    </Stagger> 
+                </Media> 
+            );
+        }
     }
 
     return(
@@ -80,9 +97,7 @@ function About(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    <Media list>
-                        {leaders}
-                    </Media>
+                    <RenderLeader leaders={props.leaders} isLoading={props.leadersLoading} errMess={props.leadersErrMess}/>
                 </div>
             </div>
         </div>
