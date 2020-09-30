@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loading } from './LoadingComponent';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, NavLink} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
 
 function RenderCard({item, isLoading, errMess}) {
     if (isLoading)
