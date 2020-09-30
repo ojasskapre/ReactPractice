@@ -10,9 +10,8 @@ function formatDate(date) {
     return shortMonths[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
 }
 
-function renderComments(comments) {
+function RenderComments({comments, addComment, dishId}) {
     if (comments!=null) {
-        
         const comm = comments.map((c) => {
             return (
                 <div>
@@ -24,7 +23,7 @@ function renderComments(comments) {
         return (
           <React.Fragment>
             <ul className="list-unstyled">{comm}</ul>
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment} />
           </React.Fragment>
         );
     }
@@ -32,7 +31,7 @@ function renderComments(comments) {
         return (<div></div>);
 }
 
-function renderDetails(dish) {
+function RenderDetails({dish}) {
   if (dish != null)  
     return (
       <Card>
@@ -58,11 +57,11 @@ const Dishdetail = (props) => {
       </div>
       <div className="row">
         <div className="col-md-5 col-sm-12 col-xs-12 m-1">
-          {renderDetails(props.dish)}    
+          <RenderDetails dish={props.dish}/>
         </div>
         <div className="col-md-5 col-sm-12 col-xs-12 m-1">
           <h4>Comments</h4>
-          {renderComments(props.comments)}
+            <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id} />
         </div>
       </div>
     </div>
@@ -90,8 +89,9 @@ class CommentForm extends Component {
   }
 
   handleSubmit(values) {
-    alert("Current State is " + JSON.stringify(values))
     this.toggleModal();
+
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
